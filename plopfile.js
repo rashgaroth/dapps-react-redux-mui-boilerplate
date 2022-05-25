@@ -71,4 +71,21 @@ module.exports = function (plop) {
       },
     ],
   });
+  plop.setGenerator('Create New Components', {
+    description: 'Generate class for pages',
+    prompts: [
+      {
+        type: 'input',
+        name: 'componentname',
+        message: 'Your Component Name',
+      },
+    ],
+    actions: [
+      {
+        type: 'add',
+        path: `${path}/index.js`,
+        templateFile: 'templates/exportPage.hbs',
+      },
+    ],
+  });
 };

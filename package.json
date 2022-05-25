@@ -12,6 +12,7 @@
     "@reduxjs/toolkit": "^1.8.1",
     "@walletconnect/client": "^2.0.0-beta.26",
     "@walletconnect/types": "^2.0.0-beta.26",
+    "axios": "^0.27.2",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
