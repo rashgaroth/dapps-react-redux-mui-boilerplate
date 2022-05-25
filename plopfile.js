@@ -4,6 +4,7 @@ module.exports = function (plop) {
   const path = 'src/containers/{{classname}}';
   const reducerPath = 'src/containers/{{classname}}/store';
   const viewsPath = 'src/containers/{{classname}}/views';
+  const testPath = 'src/containers/{{classname}}/__test__/{{classname}}.test.js';
   // block generator
   plop.setGenerator('Create New Pages', {
     description: 'Generate class for pages',
@@ -50,6 +51,11 @@ module.exports = function (plop) {
         type: 'add',
         path: `${viewsPath}/index.js`,
         templateFile: 'templates/Page.hbs',
+      },
+      {
+        type: 'add',
+        path: `${testPath}`,
+        templateFile: 'templates/test.hbs',
       },
       {
         path: 'src/store/reducers.js',

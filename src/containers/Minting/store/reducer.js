@@ -2,7 +2,7 @@
 import * as actionTypes from './constants';
 
 export const initialState = {
-  hello: 'world'
+  hello: 'world',
 };
 
 // ==============================|| CUSTOMIZATION REDUCER ||============================== //

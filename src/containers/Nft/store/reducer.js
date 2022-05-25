@@ -8,16 +8,16 @@ export const initialState = {
 // ==============================|| CUSTOMIZATION REDUCER ||============================== //
 
 // eslint-disable-next-line default-param-last
-const {{reducer}} = (state = initialState, action) => {
+const nft = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.HELLO_EXAMPLE:
       return {
         ...state,
-        hello: '{{reducer}}',
+        hello: 'nft',
       };
     default:
       return state;
   }
 };
 
-export default {{reducer}};
+export default nft;
