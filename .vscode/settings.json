@@ -1,0 +1,11 @@
+{
+  "compile-hero.disable-compile-files-on-did-save-code": false,
+  "search.exclude": {
+    "**/node_modules": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["javascript"],
+  "eslint.alwaysShowStatus": true
+}

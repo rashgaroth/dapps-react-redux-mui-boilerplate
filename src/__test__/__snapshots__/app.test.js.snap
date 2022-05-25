@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Describe App.js Tests 1`] = `
+<div
+  className="App"
+>
+  <p>
+    Unit Testing!
+  </p>
+</div>
+`;
+
+exports[`Describe App.js Tests 2`] = `
+<div
+  className="App"
+>
+  <p>
+    Unit Testing!
+  </p>
+</div>
+`;
+
+exports[`Describe App.js Tests 3`] = `
+<div
+  className="App"
+>
+  <p>
+    Unit Testing!
+  </p>
+</div>
+`;
