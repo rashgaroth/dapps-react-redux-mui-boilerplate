@@ -118,10 +118,21 @@ export const toNormalUnit = (price, decimal) => {
   return BigInt(price * 10 ** decimal);
 };
 
+/**
+ * Change currency to usd
+ * @param {number} val Provide number of currency
+ * @param {number} fractionalDigit For a fractional digit
+ * @return {string} Resolved currency string.
+ */
 export const toUsd = (val, fractionalDigit) => {
   return `$${(Math.trunc(val * 10 ** fractionalDigit) / 10 ** fractionalDigit).toFixed(2).toString()}`;
 };
 
+/**
+ * Change currency to rupiah
+ * @param {number} val Provide number of currency
+ * @return {string} Resolved currency string.
+ */
 export const toRupiah = (val, fractionalDigit) => {
   const toFixedNum = (Math.trunc(val * 10 ** fractionalDigit) / 10 ** fractionalDigit).toFixed();
   let idr = '';
@@ -131,4 +142,31 @@ export const toRupiah = (val, fractionalDigit) => {
     .split('', idr.length - 1)
     .reverse()
     .join('')}`;
+};
+
+/**
+ * Join provided url paths.
+ * @param {...string} paths Provided paths. It doesn't matter if they have trailing slash.
+ * @return {string} Resolved url without trailing slash.
+ */
+export const resolveUrl = (...paths) =>
+  paths.reduce((resolvedUrl, path) => {
+    const urlPath = path.toString().trim();
+    if (urlPath) {
+      // eslint-disable-next-line no-param-reassign
+      resolvedUrl += (resolvedUrl === '' ? '' : '/') + urlPath.replace(/^\/|\/$/g, '');
+    }
+    // eslint-disable-next-line no-param-reassign
+    resolvedUrl = resolvedUrl[0] !== '/' ? `/${resolvedUrl}` : resolvedUrl;
+    return resolvedUrl;
+  }, '');
+/**
+ * Resolve a page url adding a trailing slash.
+ * Needed to prevent 301 redirects cause of Gatsby.js' folder structure.
+ * @param {...string} path Provided paths. It doesn't matter if they have trailing slash.
+ * @return {string} Resolved url with trailing slash.
+ */
+export const resolvePageUrl = (...path) => {
+  const resolvedUrl = resolveUrl(...path);
+  return resolvedUrl;
 };

@@ -5,6 +5,8 @@ module.exports = function (plop) {
   const reducerPath = 'src/containers/{{classname}}/store';
   const viewsPath = 'src/containers/{{classname}}/views';
   const testPath = 'src/containers/{{classname}}/__test__/{{classname}}.test.js';
+  const componentPath = 'src/components/{{componentname}}/index.js';
+  const componentTestPath = 'src/components/{{componentname}}/__test__/{{componentname}}.test.js';
   // block generator
   plop.setGenerator('Create New Pages', {
     description: 'Generate class for pages',
@@ -83,8 +85,25 @@ module.exports = function (plop) {
     actions: [
       {
         type: 'add',
-        path: `${path}/index.js`,
-        templateFile: 'templates/exportPage.hbs',
+        path: `${componentPath}`,
+        templateFile: 'templates/Component.hbs',
+      },
+      {
+        type: 'add',
+        path: `${componentTestPath}`,
+        templateFile: 'templates/componentTest.hbs',
+      },
+      {
+        path: 'src/components/index.js',
+        pattern: /(\/\/ IMPORTCOMPONENT)/g,
+        template: `import {{componentname}}Component from './{{componentname}}';\n$1`,
+        type: 'modify',
+      },
+      {
+        path: 'src/components/index.js',
+        pattern: /(\/\/ EXPORTCOMPONENT)/g,
+        template: `{{componentname}}Component,\n$1`,
+        type: 'modify',
       },
     ],
   });
