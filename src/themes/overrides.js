@@ -5,7 +5,12 @@ export default function componentStyleOverrides(theme) {
       styleOverrides: {
         root: {
           fontWeight: 500,
-          borderRadius: '4px',
+          borderRadius: '8px',
+          p: 2,
+          '&:hover': {
+            backgroundColor: theme.colors.primary200,
+            color: theme.colors.primary,
+          },
         },
       },
     },

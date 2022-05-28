@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
 
 // Please don't remove this comment, this can be affected to your plopfile
-import mint from 'containers/Minting/store/reducer';
-import nft from 'containers/Nft/store/reducer';
 // REDUCERIMPORT
 import globalReducer from './globalReducer/reducer';
 // ==============================|| COMBINE REDUCER ||============================== //
@@ -10,8 +8,6 @@ import globalReducer from './globalReducer/reducer';
 const reducer = combineReducers({
   globalReducer,
   // Please don't remove this comment, this can be affected to your plopfile
-  mint,
-  nft,
   // COMBINEREDUCER
 });
 

@@ -29,6 +29,7 @@ module.exports = {
     'no-console': 1,
     'react/prop-types': 1,
     'no-undef': 1,
+    'react/require-default-props': 0,
     'no-async-promise-executor': 1,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'prettier/prettier': [
