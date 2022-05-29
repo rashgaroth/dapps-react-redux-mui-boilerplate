@@ -6,6 +6,8 @@
 export default function themePalette(theme) {
   return {
     mode: theme?.customization?.navType,
+    colors: theme?.colors,
+    white: '#FFF',
     common: {
       black: theme.colors?.darkPaper,
     },
@@ -67,8 +69,8 @@ export default function themePalette(theme) {
       white: '#FFFFFF',
     },
     background: {
-      paper: theme.paper,
-      default: theme.backgroundDefault,
+      paper: theme.colors?.primary200,
+      default: theme.colors?.primaryLight,
     },
     eventColor: {
       primary: theme?.event?.palette.primary,

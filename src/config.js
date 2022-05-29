@@ -4,7 +4,7 @@ const config = {
   basename: '',
   siteUrl: 'http://localhost:3000',
   defaultPath: '',
-  fontFamily: `'Roboto', sans-serif`,
+  fontFamily: `'Poppins', sans-serif`,
   borderRadius: 12,
   siteTitle: 'Rashgaroth dApps Boilerplate!',
 };

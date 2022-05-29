@@ -1,15 +1,18 @@
-import Dashboard from 'containers/Dashboard';
-import Home from 'containers/Home';
+import Loadable from 'components/Loadable';
+import { lazy } from 'react';
+
+const DashboardPage = Loadable(lazy(() => import('containers/Dashboard')));
+const HomePage = Loadable(lazy(() => import('containers/Home')));
 
 const MAIN_ROUTES = [
   {
     path: '/',
-    element: <Home />,
+    element: <HomePage />,
     children: [],
   },
   {
     path: '/dashboard',
-    element: <Dashboard />,
+    element: <DashboardPage />,
     children: [],
   },
 ];
