@@ -7,7 +7,7 @@ import { Button } from '@mui/material';
 const useStyles = makeStyles(_theme => {
   return {
     root: {
-      backgroundColor: _theme.palette.primary[800],
+      backgroundColor: props => props.bgColor || _theme.palette.primary[800],
       minHeight: _theme.shape.button.size.medium,
       borderRadius: _theme.shape.button.large,
       boxShadow: _theme.shape.button.large,
@@ -16,7 +16,7 @@ const useStyles = makeStyles(_theme => {
 });
 
 function ButtonComponent({ variant = 'contained', title = 'Click Me!', ...other }) {
-  const classes = useStyles();
+  const classes = useStyles(other);
   return <Button variant={variant} className={classes.root} title={title} {...other} />;
 }
 

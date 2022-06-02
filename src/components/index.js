@@ -1,5 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-import TextFieldComponent from './TextField';
 import SeoComponent from './Seo';
 import NavbarComponent from './Navbar';
 import LoaderComponent from './Loader';
@@ -14,7 +13,6 @@ export {
   LoaderComponent,
   LoadableComponent,
   // EXPORTCOMPONENT
-  TextFieldComponent,
   ModalWrapper,
   ConnectWalletModal,
 };

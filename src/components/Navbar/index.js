@@ -20,8 +20,10 @@ import { AccountBalanceWallet, Menu as BurgerMenu } from '@mui/icons-material';
 import ButtonComponent from 'components/Button';
 import ConnectWalletModal from 'components/ConnectWalletModal';
 import useConnectWallet from 'hooks/useConnectWallet';
-import BottomNavbar from './Bottom';
+import { useDispatch } from 'react-redux';
+import { setWallet } from 'store/globalReducer/actions';
 import MobileDrawer from './Drawer';
+import BottomNavbar from './Bottom';
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -62,7 +64,8 @@ function NavbarComponent({ children }, props) {
   const [openConnectModal, setOpenConnectModal] = React.useState(false);
   const classes = useStyles();
   const walletConnector = useConnectWallet();
-  const { account } = walletConnector;
+  const dispatch = useDispatch();
+  const { account, active, disconnect, connectToMetamask, connectToWalletConnect, library, balance } = walletConnector;
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -91,8 +94,29 @@ function NavbarComponent({ children }, props) {
   };
 
   const onConnectWallet = async id => {
-    console.log(account);
+    try {
+      if (id === 1) {
+        await connectToMetamask();
+      } else if (id === 2) {
+        await connectToWalletConnect();
+      }
+      closeModal();
+    } catch (err) {
+      console.log(err, '@errorConnect??');
+    }
   };
+
+  const onDisconnectWallet = async () => {
+    await disconnect();
+  };
+
+  useEffect(() => {
+    if (account !== '') {
+      dispatch(setWallet(account, balance, 'injected'));
+    } else {
+      dispatch(setWallet('', 0, 'injected'));
+    }
+  }, [account, balance]);
 
   return (
     <>
@@ -165,13 +189,27 @@ function NavbarComponent({ children }, props) {
               ))}
             </Box>
             {/* desktop */}
-            <Box sx={{ flexGrow: 0 }}>
-              <ButtonComponent variant='contained' sx={{ display: { xs: 'none', md: 'flex' } }} onClick={openModal}>
-                <Typography color='white' fontWeight='bold'>
-                  Connect Wallet
-                </Typography>
-              </ButtonComponent>
-            </Box>
+            {!active ? (
+              <Box sx={{ flexGrow: 0 }}>
+                <ButtonComponent variant='contained' sx={{ display: { xs: 'none', md: 'flex' } }} onClick={openModal}>
+                  <Typography color='white' fontWeight='bold'>
+                    Connect Wallet
+                  </Typography>
+                </ButtonComponent>
+              </Box>
+            ) : (
+              <Box sx={{ flexGrow: 0 }}>
+                <ButtonComponent
+                  variant='contained'
+                  sx={{ display: { xs: 'none', md: 'flex' } }}
+                  bgColor='#ef5350'
+                  onClick={onDisconnectWallet}>
+                  <Typography color='white' fontWeight='bold'>
+                    disconnect
+                  </Typography>
+                </ButtonComponent>
+              </Box>
+            )}
             {/* mobile */}
             <Box sx={{ flexGrow: 0 }}>
               <IconButton

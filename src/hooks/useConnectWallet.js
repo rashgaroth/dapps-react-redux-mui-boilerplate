@@ -1,27 +1,45 @@
 import { useWeb3React } from '@web3-react/core';
 import metamaskConnector from 'providers/Metamask';
 import walletconnectConnector from 'providers/WalletConnect';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import Web3 from 'web3';
 
 export default function useConnectWallet() {
   const { activate, library, chainId, account, active, deactivate, setError } = useWeb3React();
-
+  const [balance, setBalance] = useState(0);
   const init = async () => {
     try {
-      await activate(metamaskConnector);
+      activate(metamaskConnector);
     } catch (error) {
       setError(error);
     }
   };
 
+  const getBalance = async () => {
+    try {
+      const web3 = new Web3(library);
+      const accBalance = await web3.eth.getBalance(account);
+      setBalance(accBalance);
+    } catch (err) {
+      console.log(err, '@error');
+    }
+  };
+
   useEffect(() => {
-    init();
-    console.log(account);
+    if (account === '' || account === undefined) {
+      init();
+    }
+  }, [null]);
+
+  useEffect(() => {
+    if (account !== '' && active) {
+      getBalance();
+    }
   }, [account]);
 
   const connectToMetamask = async () => {
     try {
-      await activate(metamaskConnector);
+      activate(metamaskConnector);
     } catch (error) {
       setError(error);
     }
@@ -29,7 +47,7 @@ export default function useConnectWallet() {
 
   const connectToWalletConnect = async () => {
     try {
-      await activate(walletconnectConnector);
+      activate(walletconnectConnector);
     } catch (error) {
       setError(error);
     }
@@ -37,30 +55,38 @@ export default function useConnectWallet() {
 
   const disconnect = async () => {
     try {
-      await disconnect();
+      deactivate();
     } catch (error) {
       setError(error);
     }
   };
 
-  if (account !== '') {
-    return {
-      library,
-      chainId,
-      account,
-      active,
+  if (active) {
+    return useMemo(
+      () => ({
+        library,
+        chainId,
+        account,
+        active,
+        connectToMetamask,
+        connectToWalletConnect,
+        disconnect,
+        balance,
+      }),
+      [active, account, balance]
+    );
+  }
+  return useMemo(
+    () => ({
+      library: null,
+      chainId: 0,
+      account: '',
+      active: false,
       connectToMetamask,
       connectToWalletConnect,
       disconnect,
-    };
-  }
-  return {
-    library: null,
-    chainId: 0,
-    account: '',
-    active: false,
-    connectToMetamask,
-    connectToWalletConnect,
-    disconnect,
-  };
+      balance,
+    }),
+    [active, account, balance]
+  );
 }

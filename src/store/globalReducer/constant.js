@@ -16,3 +16,6 @@ export const EVENT_SET_THEME = '@event/EVENT_SET_THME';
 // action - global
 export const SET_LOADER = '@global/SET_LOADER';
 export const SET_DIALOG = '@global/SET_DIALOG';
+
+// wallet
+export const SET_ACCOUNT = '@global/SET_WALLET';

@@ -16,6 +16,11 @@ export const initialState = {
     modalType: '',
     title: '',
   },
+  wallet: {
+    account: '',
+    wallet: '',
+    balance: '',
+  },
 };
 
 // ==============================|| CUSTOMIZATION REDUCER ||============================== //
@@ -63,6 +68,16 @@ const globalReducer = (state = initialState, action) => {
           show: action.show,
           modalType: action.modalType,
           title: action.title,
+        },
+      };
+    case actionTypes.SET_ACCOUNT:
+      return {
+        ...state,
+        wallet: {
+          ...state.wallet,
+          account: action.account,
+          wallet: action.wallet,
+          balance: action.balance,
         },
       };
     default:
