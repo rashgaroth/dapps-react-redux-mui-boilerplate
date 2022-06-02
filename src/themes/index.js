@@ -4,6 +4,7 @@ import 'styles/base/font.scss';
 import componentStyleOverrides from './overrides';
 import themePalette from './pallete';
 import themeTypography from './typography';
+import themeShapes from './shapes';
 
 export const theme = ({ customization }) => {
   const color = colors;
@@ -36,6 +37,7 @@ export const theme = ({ customization }) => {
       },
     },
     typography: themeTypography(themeOption),
+    shape: themeShapes(),
   };
 
   const themes = createTheme(themeOptions);

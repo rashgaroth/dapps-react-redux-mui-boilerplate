@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   AppBar,
@@ -7,6 +7,7 @@ import {
   Button,
   Container,
   IconButton,
+  Link,
   Menu,
   MenuItem,
   Slide,
@@ -16,6 +17,9 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { AccountBalanceWallet, Menu as BurgerMenu } from '@mui/icons-material';
+import ButtonComponent from 'components/Button';
+import ConnectWalletModal from 'components/ConnectWalletModal';
+import useConnectWallet from 'hooks/useConnectWallet';
 import BottomNavbar from './Bottom';
 import MobileDrawer from './Drawer';
 
@@ -51,20 +55,17 @@ const useStyles = makeStyles(() => ({
     margin: 5,
     fontWeight: 'bold',
   },
-  btnConnect: {
-    minHeight: 45,
-  },
 }));
 function NavbarComponent({ children }, props) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [openDrawer, setOpenDrawer] = React.useState(false);
+  const [openConnectModal, setOpenConnectModal] = React.useState(false);
   const classes = useStyles();
+  const walletConnector = useConnectWallet();
+  const { account } = walletConnector;
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-  const handleOpenNavMenu = event => {
-    setAnchorElNav(event.currentTarget);
   };
 
   const handleOpenDrawer = event => {
@@ -73,26 +74,42 @@ function NavbarComponent({ children }, props) {
     }
     setOpenDrawer(true);
   };
+
   const handleCloseDrawer = event => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
     setOpenDrawer(false);
   };
+
+  const openModal = () => {
+    setOpenConnectModal(true);
+  };
+
+  const closeModal = () => {
+    setOpenConnectModal(false);
+  };
+
+  const onConnectWallet = async id => {
+    console.log(account);
+  };
+
   return (
     <>
       <HideOnScroll {...props}>
         <AppBar color='primary'>
           <Toolbar disableGutters>
-            <Typography
-              variant='p'
-              sx={{ display: { xs: 'none', md: 'flex' } }}
-              component='div'
-              color='white'
-              fontWeight='bold'
-              fontSize={45}>
-              R
-            </Typography>
+            <Link href='/'>
+              <Typography
+                variant='p'
+                sx={{ display: { xs: 'none', md: 'flex' }, cursor: 'pointer' }}
+                component='div'
+                color='white'
+                fontWeight='bold'
+                fontSize={45}>
+                R
+              </Typography>
+            </Link>
             {/* mobile */}
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
@@ -149,15 +166,11 @@ function NavbarComponent({ children }, props) {
             </Box>
             {/* desktop */}
             <Box sx={{ flexGrow: 0 }}>
-              <Button
-                color='primary'
-                variant='contained'
-                className={classes.btnConnect}
-                sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <ButtonComponent variant='contained' sx={{ display: { xs: 'none', md: 'flex' } }} onClick={openModal}>
                 <Typography color='white' fontWeight='bold'>
                   Connect Wallet
                 </Typography>
-              </Button>
+              </ButtonComponent>
             </Box>
             {/* mobile */}
             <Box sx={{ flexGrow: 0 }}>
@@ -177,6 +190,7 @@ function NavbarComponent({ children }, props) {
         <Box sx={{ my: 4 }}>{children}</Box>
       </Container>
       <BottomNavbar />
+      <ConnectWalletModal open={openConnectModal} handleClose={closeModal} onClickWallet={onConnectWallet} />
       <MobileDrawer handleClose={handleCloseDrawer} handleOpen={handleOpenDrawer} openDrawer={openDrawer} />
     </>
   );
